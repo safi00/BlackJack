@@ -18,17 +18,17 @@ public class Dealer extends Participant {
 
     public int getHandValue(){
         for (Card card: playerHand){
-            if (card.getNumber()==1){
+            if (card.getValue()==1){
                 if(currentHandValue + 11 <= 21){
                     currentHandValue = currentHandValue + 11;
                 }else {
                     currentHandValue = currentHandValue + 1;
                 }
             }
-            if (card.getNumber()>9){
+            if (card.getValue()>9){
                 currentHandValue = currentHandValue + 10;
             }else {
-                currentHandValue = currentHandValue + card.getNumber();
+                currentHandValue = currentHandValue + card.getValue();
             }
         }
         return currentHandValue;

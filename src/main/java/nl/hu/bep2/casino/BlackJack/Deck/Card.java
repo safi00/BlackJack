@@ -1,38 +1,46 @@
 package nl.hu.bep2.casino.BlackJack.Deck;
 
 public class Card {
-    private int    number;
-    private String suit;
+    private final int    value;
+    private final Suit   suit;
 
-    public Card (int num, String shape){
-        number = num;
+    public enum Suit {
+        Clubs,
+        Diamonds,
+        Hearts,
+        Spades,
+        Joker
+    }
+
+    public Card (int num, Suit shape){
+        value  = num;
         suit   = shape;
     }
 
-    public int getNumber() {
-        return number;
-    }
-    public String getSuit() {
-        return suit;
+    public int getValue() {
+        return value;
     }
 
     public String toString() {
         String returnValue;
-        if (number == 1){
-            returnValue = "Ace of ";
-        } else {
-            returnValue = number + " of ";
+        if (suit == Suit.Joker)
+            returnValue = "" + suit;
+        else
+            if (value == 1){
+                returnValue = "Ace of " + suit;
+            } else {
+                returnValue = value + " of " + suit;
 
-            if (number == 11){
-                returnValue = "Jack of ";
+                if (value == 11){
+                    returnValue = "Jack of " + suit;
+                }
+                if (value == 12){
+                    returnValue = "Queen of " + suit;
+                }
+                if (value == 13){
+                    returnValue = "King of " + suit;
+                }
             }
-            if (number == 12){
-                returnValue = "Queen of ";
-            }
-            if (number == 13){
-                returnValue = "King of ";
-            }
-        }
-        return returnValue + suit;
+        return returnValue;
     }
 }

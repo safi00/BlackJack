@@ -7,25 +7,39 @@ import java.util.List;
 public class Deck {
     private List<Card> gameDeck = new ArrayList<>();
 
-    public Deck(int numberOfDeck){
+    public Deck(int amountOfDecks, boolean addJokers){
+        deckMaker(amountOfDecks);
+           if (addJokers){
+               int amountOfjokers;
+               int totaljokers = 2 * amountOfDecks;
+               for (amountOfjokers = 0; amountOfjokers < totaljokers; amountOfjokers++) {
+                   gameDeck.add(new Card(14, Card.Suit.Joker));
+               }
+           }
+    }
+
+    public List<Card> getGameDeck() {
+        return gameDeck;
+    }
+
+    public List<Card> deckMaker(int numberOfDecks){
         int gameDeckNum   = 0;
         int amountOfCards;
+        int cardValue;
 
-        if (numberOfDeck > 0){
-            while (gameDeckNum < numberOfDeck){
+        if (numberOfDecks > 0){
+            while (gameDeckNum < numberOfDecks){
                 for (amountOfCards = 1;amountOfCards < 14; amountOfCards++){
-                    gameDeck.add(new Card(amountOfCards,"Clubs"));
-                    gameDeck.add(new Card(amountOfCards,"Diamonds"));
-                    gameDeck.add(new Card(amountOfCards,"Hearts"));
-                    gameDeck.add(new Card(amountOfCards,"Spades"));
+                    cardValue = amountOfCards;
+                    gameDeck.add(new Card(cardValue, Card.Suit.Clubs));
+                    gameDeck.add(new Card(cardValue, Card.Suit.Diamonds));
+                    gameDeck.add(new Card(cardValue, Card.Suit.Hearts));
+                    gameDeck.add(new Card(cardValue, Card.Suit.Spades));
                 }
                 gameDeckNum = gameDeckNum + 1;
             }
             Collections.shuffle(gameDeck);
         }
-    }
-
-    public List<Card> getGameDeck() {
         return gameDeck;
     }
 
