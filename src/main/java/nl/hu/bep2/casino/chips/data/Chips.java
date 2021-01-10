@@ -48,6 +48,10 @@ public class Chips {
         this.amount += amount;
     }
 
+    public void deduct(Long amount){
+        this.amount -= amount;
+    }
+
     public User getUser() {
         return user;
     }

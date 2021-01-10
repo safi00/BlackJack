@@ -1,28 +1,34 @@
-package nl.hu.bep2.casino.BlackJack.Deck;
+package nl.hu.bep2.casino.BlackJack.Domain.Deck;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<Card> gameDeck = new ArrayList<>();
+    private final List<Card> gameDeck = new ArrayList<>();
+    private final int amountOfDecks;
+    private final boolean Jokers;
 
     public Deck(int amountOfDecks, boolean addJokers){
-        deckMaker(amountOfDecks);
-           if (addJokers){
-               int amountOfjokers;
-               int totaljokers = 2 * amountOfDecks;
-               for (amountOfjokers = 0; amountOfjokers < totaljokers; amountOfjokers++) {
-                   gameDeck.add(new Card(14, Card.Suit.Joker));
-               }
-           }
+        this.amountOfDecks = amountOfDecks;
+        this.Jokers        = addJokers;
+        deckMaker(amountOfDecks,addJokers);
+        Collections.shuffle(gameDeck);
     }
 
     public List<Card> getGameDeck() {
         return gameDeck;
     }
 
-    public List<Card> deckMaker(int numberOfDecks){
+    public int getAmountOfDecks() {
+        return amountOfDecks;
+    }
+
+    public boolean areJokersAvailable() {
+        return Jokers;
+    }
+
+    public void deckMaker(int numberOfDecks, boolean addJokers){
         int gameDeckNum   = 0;
         int amountOfCards;
         int cardValue;
@@ -40,14 +46,23 @@ public class Deck {
             }
             Collections.shuffle(gameDeck);
         }
-        return gameDeck;
+        if (addJokers){
+            int amountOfJokers;
+            int totalJokers = 2 * amountOfDecks;
+            for (amountOfJokers = 0; amountOfJokers < totalJokers; amountOfJokers++) {
+                gameDeck.add(new Card(14, Card.Suit.Joker));
+            }
+        }
     }
 
-    public void shuffleCards() {
+    public void shuffle() {
         Collections.shuffle(gameDeck);
     }
 
-    public Card dealCards(List<Card> gameDeck){
+    public Card dealCard(){
+        if (gameDeck.size() == 0) {
+            refillGameDeck();
+        }
         Card returnValue = gameDeck.get(0);
         gameDeck.remove(0);
         return returnValue;
@@ -55,5 +70,9 @@ public class Deck {
 
     public String toString() {
         return gameDeck.toString();
+    }
+
+    public void refillGameDeck(){
+        deckMaker(amountOfDecks, Jokers);
     }
 }

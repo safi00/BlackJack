@@ -1,4 +1,4 @@
-package nl.hu.bep2.casino.BlackJack.Deck;
+package nl.hu.bep2.casino.BlackJack.Domain.Deck;
 
 public class Card {
     private final int    value;
