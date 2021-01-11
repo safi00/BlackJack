@@ -25,14 +25,21 @@ public class GameController {
     public GameProgress newGame(Authentication authentication,
                                 @RequestBody @Valid NewGameDTO request,
                                 @RequestParam int numberOfDecks,
-                                @RequestParam boolean tenplus,
-                                @RequestParam boolean jokers,
+                                @RequestParam String tenplus,
+                                @RequestParam String jokers,
                                 @RequestParam int wincondition) {
         UserProfile profile = (UserProfile) authentication.getPrincipal();
         String username = profile.getUsername();
 
+        boolean tenPluss;
+        boolean jokerss;
+
+        tenPluss = tenplus.equals("yes") || tenplus.equals("Yes");
+        jokerss  = jokers.equals("yes")  || jokers.equals("Yes");
+
         GameProgress progress;
-        Rules rules = new Rules(numberOfDecks, tenplus, jokers, wincondition);
+
+        Rules rules = new Rules(numberOfDecks, tenPluss, jokerss, wincondition);
 
         try {
             progress = service.startGame(username, request.bet, rules);
